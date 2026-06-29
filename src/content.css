@@ -1,0 +1,25 @@
+.ytuc-btn {
+  display: inline-block;
+  width: 36px;
+  height: 36px;
+  padding: 6px;
+  vertical-align: top;
+  box-sizing: border-box;
+}
+
+.ytuc-btn svg {
+  display: block;
+}
+
+.ytuc-btn[aria-pressed="false"] .ytuc-on {
+  display: none;
+}
+
+#movie_player.ytuc-crop-on {
+  overflow: hidden !important;
+}
+
+#movie_player.ytuc-crop-on video.html5-main-video {
+  transform: scale(var(--ytuc-scale, 1)) !important;
+  transform-origin: center center !important;
+}

@@ -1,0 +1,28 @@
+{
+  "manifest_version": 3,
+  "name": "YouTube Ultrawide Crop",
+  "version": "1.0.0",
+  "description": "Adds a YouTube player button that keeps ultrawide crop on until you turn it off.",
+  "permissions": [
+    "storage"
+  ],
+  "icons": {
+    "16": "icons/16.png",
+    "48": "icons/48.png",
+    "128": "icons/128.png"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://www.youtube.com/*"
+      ],
+      "css": [
+        "content.css"
+      ],
+      "js": [
+        "index.js"
+      ],
+      "run_at": "document_idle"
+    }
+  ]
+}

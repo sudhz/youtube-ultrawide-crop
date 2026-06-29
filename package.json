@@ -1,0 +1,36 @@
+{
+  "name": "youtube-ultrawide-crop",
+  "version": "1.0.0",
+  "description": "Toggle ultrawide crop once; YouTube stays cropped until you turn it off.",
+  "type": "module",
+  "license": "MIT",
+  "homepage": "https://github.com/sudhz/youtube-ultrawide-crop#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sudhz/youtube-ultrawide-crop.git"
+  },
+  "bugs": {
+    "url": "https://github.com/sudhz/youtube-ultrawide-crop/issues"
+  },
+  "keywords": [
+    "chrome-extension",
+    "youtube",
+    "ultrawide",
+    "zoom-to-fill",
+    "manifest-v3"
+  ],
+  "scripts": {
+    "build": "bun run scripts/build.ts",
+    "dev": "bun run scripts/build.ts --watch",
+    "typecheck": "tsc --noEmit",
+    "pack": "bun run scripts/package.ts",
+    "validate": "bun run typecheck && bun run build",
+    "release:chrome": "bun run validate && bun run pack"
+  },
+  "devDependencies": {
+    "@types/chrome": "^0.0.326",
+    "@types/node": "^22.13.14",
+    "esbuild": "^0.25.5",
+    "typescript": "^5.8.3"
+  }
+}
