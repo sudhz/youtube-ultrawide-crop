@@ -7,17 +7,61 @@ import { applyCrop } from './crop';
 import { getPlayer } from './dom';
 
 const BUTTON_ATTR = 'data-ytuc-btn';
+const SVG_NS = 'http://www.w3.org/2000/svg';
 
-const ICON = `
-  <svg viewBox="0 0 36 36" width="24" height="24">
-    <g fill="none" stroke="currentColor" stroke-width="2.5"
-       stroke-linecap="round" stroke-linejoin="round">
-      <path d="M8 13V8h5"/><path d="M23 8h5v5"/>
-      <path d="M28 23v5h-5"/><path d="M13 28H8v-5"/>
-    </g>
-    <rect class="ytuc-on" x="13" y="13" width="10" height="10" rx="1"
-          fill="currentColor" stroke="none"/>
-  </svg>`;
+function svgElement<T extends SVGElement>(
+    tagName: string,
+    attributes: Record<string, string>,
+): T {
+    const element = document.createElementNS(SVG_NS, tagName) as T;
+    for (const [name, value] of Object.entries(attributes)) {
+        element.setAttribute(name, value);
+    }
+    return element;
+}
+
+function createIcon(): SVGSVGElement {
+    const svg = svgElement<SVGSVGElement>('svg', {
+        viewBox: '0 0 36 36',
+        width: '24',
+        height: '24',
+        'aria-hidden': 'true',
+        focusable: 'false',
+    });
+
+    const group = svgElement<SVGGElement>('g', {
+        fill: 'none',
+        stroke: 'currentColor',
+        'stroke-width': '2.5',
+        'stroke-linecap': 'round',
+        'stroke-linejoin': 'round',
+    });
+
+    for (const d of [
+        'M8 13V8h5',
+        'M23 8h5v5',
+        'M28 23v5h-5',
+        'M13 28H8v-5',
+    ]) {
+        group.append(svgElement<SVGPathElement>('path', { d }));
+    }
+
+    svg.append(
+        group,
+        svgElement<SVGRectElement>('rect', {
+            class: 'ytuc-on',
+            x: '13',
+            y: '13',
+            width: '10',
+            height: '10',
+            rx: '1',
+            fill: 'currentColor',
+            stroke: 'none',
+        }),
+    );
+
+    return svg;
+}
 
 function onButtonClick(event: Event): void {
     event.preventDefault();
@@ -31,7 +75,7 @@ export function injectButton(
     player: HTMLElement,
     controls: HTMLElement,
 ): void {
-    if (player.querySelector(`[${BUTTON_ATTR}]`)) {
+    if (player.querySelector('[' + BUTTON_ATTR + ']')) {
         return;
     }
 
@@ -41,7 +85,7 @@ export function injectButton(
     button.title = 'Ultrawide crop';
     button.setAttribute('aria-label', 'Ultrawide crop');
     button.setAttribute('aria-pressed', String(isEnabled()));
-    button.innerHTML = ICON;
+    button.append(createIcon());
 
     button.addEventListener('click', onButtonClick);
 
@@ -53,7 +97,7 @@ export function injectButton(
 
 export function updateButton(): void {
     const btn = document.querySelector<HTMLElement>(
-        `#movie_player [${BUTTON_ATTR}]`,
+        '#movie_player [' + BUTTON_ATTR + ']',
     );
     if (!btn) {
         return;
