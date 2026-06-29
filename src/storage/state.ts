@@ -1,6 +1,8 @@
 /**
- * State — crop on/off persisted in chrome.storage.local.
+ * State — crop on/off persisted in extension storage.
  */
+
+import { extensionApi } from '../platform/extension-api';
 
 const STORAGE_KEY = 'cropEnabled';
 
@@ -11,12 +13,12 @@ export function isEnabled(): boolean {
 }
 
 export async function loadState(): Promise<void> {
-    const result = await chrome.storage.local.get(STORAGE_KEY);
+    const result = await extensionApi.storage.local.get(STORAGE_KEY);
     cropEnabled = result[STORAGE_KEY] === true;
 }
 
 function saveState(): void {
-    chrome.storage.local.set({ [STORAGE_KEY]: cropEnabled });
+    extensionApi.storage.local.set({ [STORAGE_KEY]: cropEnabled });
 }
 
 export function toggleCrop(): void {
@@ -27,7 +29,7 @@ export function toggleCrop(): void {
 export function onStorageChange(
     cb: () => void,
 ): void {
-    chrome.storage.onChanged.addListener((changes, area) => {
+    extensionApi.storage.onChanged.addListener((changes, area) => {
         if (area !== 'local') {
             return;
         }

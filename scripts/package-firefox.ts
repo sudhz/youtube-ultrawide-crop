@@ -1,5 +1,5 @@
 /**
- * Package script - creates a Chrome Web Store ready ZIP from dist/.
+ * Package script - creates an AMO-ready Firefox ZIP from dist-firefox/.
  * The ZIP root contains manifest.json, index.js, content.css, and icons/.
  */
 
@@ -13,7 +13,7 @@ import {
 } from 'node:fs';
 import { join, relative, sep } from 'node:path';
 
-const distDir = 'dist';
+const distDir = 'dist-firefox';
 const artifactsDir = 'artifacts';
 
 type PackageJson = {
@@ -166,13 +166,13 @@ function createZip(sourceDir: string, outFile: string): void {
 }
 
 if (!existsSync(`${distDir}/manifest.json`)) {
-  throw new Error('dist/manifest.json not found. Run `bun run build` first.');
+  throw new Error('dist-firefox/manifest.json not found. Run `bun run build` first.');
 }
 
 const packageJson = JSON.parse(readFileSync('package.json', 'utf8')) as PackageJson;
 const name = packageJson.name ?? 'youtube-ultrawide-crop';
 const version = packageJson.version ?? '0.0.0';
-const outFile = `${artifactsDir}/${name}-v${version}.zip`;
+const outFile = `${artifactsDir}/${name}-v${version}-firefox.zip`;
 
 mkdirSync(artifactsDir, { recursive: true });
 createZip(distDir, outFile);

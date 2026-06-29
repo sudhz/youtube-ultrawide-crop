@@ -23,9 +23,11 @@
     "build": "bun run scripts/build.ts",
     "dev": "bun run scripts/build.ts --watch",
     "typecheck": "tsc --noEmit",
-    "pack": "bun run scripts/package.ts",
+    "pack": "bun run scripts/package-chrome.ts",
+    "pack:firefox": "bun run scripts/package-firefox.ts",
     "validate": "bun run typecheck && bun run build",
-    "release:chrome": "bun run validate && bun run pack"
+    "release:chrome": "bun run validate && bun run pack",
+    "release:firefox": "bun run validate && bun run pack:firefox"
   },
   "devDependencies": {
     "@types/chrome": "^0.0.326",

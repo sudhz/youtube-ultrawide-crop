@@ -25,7 +25,7 @@ This project is not affiliated with YouTube, Google, or Alphabet.
 
 ## Install Locally
 
-You need [Bun](https://bun.sh) and Chrome or another Chromium browser.
+You need [Bun](https://bun.sh) and Chrome, another Chromium browser, or Firefox.
 
 ```bash
 bun install
@@ -37,8 +37,15 @@ Then load it in Chrome:
 1. Go to `chrome://extensions`
 2. Turn on **Developer mode**
 3. Click **Load unpacked**
-4. Select the `dist/` folder
+4. Select the `dist-chrome/` folder
 5. Open or refresh YouTube
+
+Or load it temporarily in Firefox:
+
+1. Go to `about:debugging#/runtime/this-firefox`
+2. Click **Load Temporary Add-on...**
+3. Select `dist-firefox/manifest.json`
+4. Open or refresh YouTube
 
 ## Development
 
@@ -56,11 +63,14 @@ Useful commands:
 bun run typecheck
 bun run build
 bun run pack
+bun run pack:firefox
 bun run release:chrome
+bun run release:firefox
 ```
 
-`bun run release:chrome` validates the project, rebuilds `dist/`, and writes a
-Chrome Web Store ready ZIP to `artifacts/`.
+`bun run release:chrome` validates the project, rebuilds `dist-chrome/`, and writes a Chrome Web Store ready ZIP to `artifacts/`.
+
+`bun run release:firefox` validates the project, rebuilds `dist-firefox/`, and writes an AMO-ready Firefox ZIP to `artifacts/`.
 
 ## Project Structure
 
@@ -68,20 +78,23 @@ Chrome Web Store ready ZIP to `artifacts/`.
 src/
   index.ts             content-script entrypoint
   content.css          YouTube button and crop styling
-  manifest.json        Manifest V3 extension manifest
+  manifest.json        shared Manifest V3 extension manifest
+  platform/            Chrome/Firefox extension API shim
   player/              button, crop, and DOM helpers
   storage/             persisted state
   sync/                YouTube navigation and DOM sync
 scripts/
-  build.ts             build dist/
-  package.ts           zip dist/ for release
+  build.ts             build dist-chrome/ and dist-firefox/
+  package-chrome.ts    zip dist-chrome/ for Chrome Web Store
+  package-firefox.ts   zip dist-firefox/ for Firefox AMO
 icons/                 extension icons
-store-assets/          Chrome Web Store listing graphics
+store-assets/          store listing graphics
+PRIVACY.md             privacy policy
 ```
 
 ## How It Works
 
-The extension stores one boolean, `cropEnabled`, in `chrome.storage.local`.
+The extension stores one boolean, `cropEnabled`, in extension local storage (`chrome.storage.local` on Chrome and `browser.storage.local` on Firefox).
 
 When crop is enabled, the content script adds a class to YouTube's
 `#movie_player` element and sets a CSS scale variable based on the current
