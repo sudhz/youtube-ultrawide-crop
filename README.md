@@ -76,6 +76,7 @@ scripts/
   build.ts             build dist/
   package.ts           zip dist/ for release
 icons/                 extension icons
+store-assets/          Chrome Web Store listing graphics
 ```
 
 ## How It Works
