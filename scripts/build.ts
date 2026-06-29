@@ -18,7 +18,7 @@ const isWatch = process.argv.includes('--watch');
 const firefoxSettings = {
   browser_specific_settings: {
     gecko: {
-      id: 'youtube-ultrawide-crop@sudhz.github.io',
+      id: '{082d94be-e62f-42ae-a3de-bb47787b5e3a}',
       strict_min_version: '128.0',
       data_collection_permissions: {
         required: ['none'],
