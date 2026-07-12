@@ -105,7 +105,9 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           for f in artifacts/*.zip; do
-            gh release upload "${{ github.event.release.tag_name }}" "$f" --clobber
+            gh release upload "${{ github.event.release.tag_name }}" "$f" \
+              --repo "$GITHUB_REPOSITORY" \
+              --clobber
           done
 
   publish-chrome:
