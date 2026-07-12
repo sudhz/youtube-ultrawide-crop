@@ -45,9 +45,10 @@ jobs:
           fi
 
       - name: Verify release body is non-empty
+        env:
+          RELEASE_BODY: ${{ github.event.release.body }}
         run: |
-          body="${{ github.event.release.body }}"
-          if [ -z "$(echo "$body" | tr -d '[:space:]')" ]; then
+          if [ -z "$(printf '%s' "$RELEASE_BODY" | tr -d '[:space:]')" ]; then
             echo "Release body is empty"
             exit 1
           fi

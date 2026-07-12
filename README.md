@@ -81,28 +81,6 @@ Chrome publishes automatically after review approval. Firefox receives a listed
 update with source code and release notes. Store listing text and graphics are
 maintained manually.
 
-## Project Structure
-
-```text
-src/
-  index.ts             content-script entrypoint
-  content.css          YouTube button and crop styling
-  manifest.json        shared Manifest V3 extension manifest
-  feedback.ts          shared feedback links and URL builder
-  platform/            Chrome/Firefox extension API shim
-  player/              button, crop, and DOM helpers
-  popup/               read-only status popup (html + ts)
-  background/          uninstall survey URL registration
-  storage/             persisted state
-  sync/                YouTube navigation and DOM sync
-scripts/
-  build.ts             build dist-chrome/ and dist-firefox/
-  package-source.ts    zip source tree for AMO source submission
-icons/                 extension icons
-store-assets/          store listing graphics
-PRIVACY.md             privacy policy
-```
-
 ## How It Works
 
 The extension stores one boolean, `cropEnabled`, in extension local storage (`chrome.storage.local` on Chrome and `browser.storage.local` on Firefox).
