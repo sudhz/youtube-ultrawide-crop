@@ -15,13 +15,8 @@ This project is not affiliated with YouTube, Google, or Alphabet.
 - Global persistent on/off state across videos, refreshes, and navigation
 - Works with YouTube's single-page navigation
 - Works in fullscreen
-- No popup
-- No background service worker
-- No analytics
-- No remote code
-- No accounts or login
-- No data collection
-- Minimal permission set: `storage` only
+- Read-only popup shows current crop status
+- Optional feedback form (popup link and uninstall survey)
 
 ## Install Locally
 
@@ -61,16 +56,30 @@ Useful commands:
 
 ```bash
 bun run typecheck
+bun run test
 bun run build
-bun run pack
-bun run pack:firefox
-bun run release:chrome
-bun run release:firefox
+bun run lint:firefox
+bun run pack:all
+bun run release
 ```
 
-`bun run release:chrome` validates the project, rebuilds `dist-chrome/`, and writes a Chrome Web Store ready ZIP to `artifacts/`.
+`bun run release` validates the project (typecheck, build, tests, Firefox lint)
+and creates Chrome, Firefox, and source ZIPs in `artifacts/`.
 
-`bun run release:firefox` validates the project, rebuilds `dist-firefox/`, and writes an AMO-ready Firefox ZIP to `artifacts/`.
+## Release
+
+Releases are published from `main` via GitHub Releases.
+
+1. Bump `version` in `package.json` (three-part numeric, e.g. `1.2.0`).
+2. Commit and push to `main`.
+3. Create a GitHub Release tagged `vX.Y.Z` with release notes.
+4. The `publish` workflow builds the extension, attaches ZIPs to the release,
+   submits Chrome through the Web Store V2 API, and submits Firefox through
+   `web-ext sign`.
+
+Chrome publishes automatically after review approval. Firefox receives a listed
+update with source code and release notes. Store listing text and graphics are
+maintained manually.
 
 ## Project Structure
 
@@ -79,14 +88,16 @@ src/
   index.ts             content-script entrypoint
   content.css          YouTube button and crop styling
   manifest.json        shared Manifest V3 extension manifest
+  feedback.ts          shared feedback links and URL builder
   platform/            Chrome/Firefox extension API shim
   player/              button, crop, and DOM helpers
+  popup/               read-only status popup (html + ts)
+  background/          uninstall survey URL registration
   storage/             persisted state
   sync/                YouTube navigation and DOM sync
 scripts/
   build.ts             build dist-chrome/ and dist-firefox/
-  package-chrome.ts    zip dist-chrome/ for Chrome Web Store
-  package-firefox.ts   zip dist-firefox/ for Firefox AMO
+  package-source.ts    zip source tree for AMO source submission
 icons/                 extension icons
 store-assets/          store listing graphics
 PRIVACY.md             privacy policy
@@ -95,6 +106,12 @@ PRIVACY.md             privacy policy
 ## How It Works
 
 The extension stores one boolean, `cropEnabled`, in extension local storage (`chrome.storage.local` on Chrome and `browser.storage.local` on Firefox).
+
+A read-only toolbar popup displays whether crop is currently on or off by
+reading the stored value once when opened. The popup cannot toggle crop — only
+the player button can. A tiny background script registers an uninstall survey
+URL so the browser can open the optional feedback form if you remove the
+extension.
 
 When crop is enabled, the content script adds a class to YouTube's
 `#movie_player` element and sets a CSS scale variable based on the current
@@ -108,25 +125,23 @@ and crop state in sync.
 
 ## Permissions
 
-| Permission | Why |
-| --- | --- |
-| `storage` | Stores whether ultrawide crop is on or off |
+| Permission | Why                                        |
+| ---------- | ------------------------------------------ |
+| `storage`  | Stores whether ultrawide crop is on or off |
 
-The content script is limited to:
+The content script is limited to `https://www.youtube.com/*`.
 
-```text
-https://www.youtube.com/*
-```
+## Feedback
 
-There is no `activeTab`, `tabs`, `scripting`, `webRequest`,
-`web_accessible_resources`, background service worker, or popup.
+The popup's **Share feedback** link opens a Tally form. On uninstall, the
+browser opens the same form automatically. The extension adds only a `source`
+label and its `version` to the form URL. See [PRIVACY.md](PRIVACY.md) for
+details about Tally's role. On Firefox, those values are included only when the
+optional technical and interaction data permission is enabled.
 
 ## Privacy
 
 See [PRIVACY.md](PRIVACY.md).
-
-Short version: this extension stores only the on/off toggle locally in the
-browser. It does not collect, transmit, sell, or share any user data.
 
 ## License
 

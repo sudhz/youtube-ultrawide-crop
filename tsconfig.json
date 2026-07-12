@@ -4,7 +4,7 @@
     "module": "ESNext",
     "moduleResolution": "Bundler",
     "lib": ["ES2022", "DOM", "DOM.Iterable"],
-    "types": ["chrome", "node"],
+    "types": ["bun", "chrome", "node"],
     "strict": true,
     "noUncheckedIndexedAccess": true,
     "noEmit": true,
@@ -16,5 +16,5 @@
       "@src/*": ["./src/*"]
     }
   },
-  "include": ["src/**/*.ts", "scripts/**/*.ts"]
+  "include": ["src/**/*.ts", "scripts/**/*.ts", "tests/**/*.ts"]
 }

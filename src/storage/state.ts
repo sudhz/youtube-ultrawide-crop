@@ -4,7 +4,7 @@
 
 import { extensionApi } from '../platform/extension-api';
 
-const STORAGE_KEY = 'cropEnabled';
+export const STORAGE_KEY = 'cropEnabled';
 
 let cropEnabled = false;
 

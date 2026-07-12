@@ -5,3 +5,4 @@ dist-firefox/
 artifacts/
 .DS_Store
 *.log
+gha-creds-*.json

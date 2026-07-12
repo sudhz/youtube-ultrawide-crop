@@ -1,47 +1,37 @@
 # Privacy Policy
 
-Effective date: 2026-06-29
-
-YouTube Ultrawide Crop does not collect, sell, transmit, or share personal data.
+Effective date: 2026-07-12
 
 ## Data Stored Locally
 
-The extension stores one setting in `chrome.storage.local`:
+The extension stores one setting in local extension storage:
 
 - `cropEnabled`: whether ultrawide crop is currently on or off.
 
-This value stays on your device inside the browser's extension storage. It is used only to remember your crop preference across YouTube videos, refreshes, and normal YouTube navigation.
+This value stays on your device inside the browser's extension storage. It is used to remember your crop preference across YouTube videos, refreshes, and navigation.
 
-## Data Collection
+## Feedback
 
-This extension does not collect:
+The popup can open a feedback form hosted by Tally (`tally.so`). On uninstall, the browser opens the same form automatically. Form submission is voluntary — no response is submitted without action.
 
-- Browsing history
-- YouTube account information
-- Video watch history
-- Search queries
-- Analytics events
-- Personal information
-- Payment information
-- Authentication data
+When the form opens, the extension adds only:
 
-## Network Requests
+- `source`: a label identifying the browser and where the form was opened from (`chrome-popup`, `firefox-popup`, `chrome-uninstall`, or `firefox-uninstall`).
+- `version`: the installed extension version.
 
-The extension does not send data to any server controlled by this project. It does not use remote code, analytics, tracking pixels, or telemetry.
+On Firefox, these two values are added only when the optional technical and
+interaction data permission is enabled. Otherwise, the form opens without
+either value.
+
+Tally handles form contents and normal request information (such as IP address) under its own [privacy policy](https://tally.so/help/privacy-policy).
 
 ## Permissions
 
-The extension requests only the `storage` permission. This is required to remember whether ultrawide crop is on or off.
-
-The content script runs only on:
-
-```text
-https://www.youtube.com/*
-```
+The extension uses the `storage` permission to remember the crop toggle. The content script runs only on `https://www.youtube.com/*`.
 
 ## Third Parties
 
-This extension is not affiliated with YouTube, Google, or Alphabet. It does not share data with third parties.
+This extension is not affiliated with YouTube, Google, or Alphabet. Tally hosts the optional feedback form.
 
 ## Contact
 
