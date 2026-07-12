@@ -246,6 +246,18 @@ jobs:
 
       - name: Submit to AMO
         run: |
+          AMO_VERSION_URL="https://addons.mozilla.org/api/v5/addons/addon/%7B082d94be-e62f-42ae-a3de-bb47787b5e3a%7D/versions/v${RELEASE_VERSION}/"
+          AMO_STATUS=$(curl --silent --output /dev/null --write-out '%{http_code}' "$AMO_VERSION_URL")
+
+          if [ "$AMO_STATUS" = "200" ]; then
+            echo "Firefox v$RELEASE_VERSION already exists; skipping"
+            exit 0
+          fi
+          if [ "$AMO_STATUS" != "404" ]; then
+            echo "Unexpected AMO version check response: HTTP $AMO_STATUS"
+            exit 1
+          fi
+
           rm -rf dist-firefox
           unzip -q \
             "artifacts/youtube-ultrawide-crop-v${RELEASE_VERSION}-firefox.zip" \
