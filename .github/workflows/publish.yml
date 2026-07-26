@@ -156,21 +156,56 @@ jobs:
             exit 1
           fi
 
-          # 3. Skip if same version already published or submitted
-          PUBLISHED=$(echo "$STATUS" | jq -r \
+          # 3. Read the published and submitted revision states separately
+          PUBLISHED_STATE=$(echo "$STATUS" | jq -r \
+            '.publishedItemRevisionStatus.state // empty')
+          PUBLISHED_VERSION=$(echo "$STATUS" | jq -r \
             '([.publishedItemRevisionStatus.distributionChannels[]?.crxVersion] | first) // empty')
-          PENDING=$(echo "$STATUS" | jq -r \
+          SUBMITTED_STATE=$(echo "$STATUS" | jq -r \
+            '.submittedItemRevisionStatus.state // empty')
+          SUBMITTED_VERSION=$(echo "$STATUS" | jq -r \
             '([.submittedItemRevisionStatus.distributionChannels[]?.crxVersion] | first) // empty')
-          if [ "$PUBLISHED" = "$VERSION" ] || [ "$PENDING" = "$VERSION" ]; then
-            echo "Version $VERSION already published or submitted; skipping"
+
+          if [ "$PUBLISHED_STATE" = "PUBLISHED" ] && \
+             [ "$PUBLISHED_VERSION" = "$VERSION" ]; then
+            echo "Version $VERSION is already published; skipping"
             exit 0
           fi
 
-          # 4. Fail if a different version is under review
-          if [ -n "$PENDING" ] && [ "$PENDING" != "$VERSION" ]; then
-            echo "Version $PENDING is under review; cannot submit $VERSION"
-            exit 1
-          fi
+          # 4. Only active submissions should block a new upload
+          case "$SUBMITTED_STATE" in
+            "")
+              ;;
+            PENDING_REVIEW)
+              if [ "$SUBMITTED_VERSION" = "$VERSION" ]; then
+                echo "Version $VERSION is already pending review; skipping"
+                exit 0
+              fi
+              echo "Version $SUBMITTED_VERSION is pending review; cannot submit $VERSION"
+              exit 1
+              ;;
+            STAGED)
+              echo "Version $SUBMITTED_VERSION is staged; publish or cancel it before submitting $VERSION"
+              exit 1
+              ;;
+            CANCELLED|REJECTED)
+              echo "Ignoring inactive $SUBMITTED_STATE submission for version $SUBMITTED_VERSION"
+              ;;
+            PUBLISHED)
+              if [ "$SUBMITTED_VERSION" = "$VERSION" ]; then
+                echo "Version $VERSION is already published; skipping"
+                exit 0
+              fi
+              ;;
+            PUBLISHED_TO_TESTERS)
+              echo "Version $SUBMITTED_VERSION is published to testers; refusing an automatic public submission"
+              exit 1
+              ;;
+            ITEM_STATE_UNSPECIFIED|*)
+              echo "Unexpected submitted item state: $SUBMITTED_STATE"
+              exit 1
+              ;;
+          esac
 
           # 5. Upload the Chrome ZIP
           UPLOAD=$(curl --fail-with-body --silent --show-error \
