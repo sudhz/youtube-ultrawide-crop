@@ -1,11 +1,15 @@
 # YouTube Ultrawide Crop
 
-Turn it on once. Every YouTube video stays cropped until you turn it off.
+Enjoy YouTube without distracting black bars on your ultrawide monitor.
 
-YouTube Ultrawide Crop is a small browser extension for desktop YouTube. It adds
-one button inside YouTube's native video player controls. Clicking the button
-zooms the video to fill the player, which is useful on ultrawide displays where
-videos often show black bars.
+[![Install from the Chrome Web Store](https://img.shields.io/badge/Get_it_on-Chrome_Web_Store-4285F4?style=for-the-badge&logo=googlechrome&logoColor=white)](https://chromewebstore.google.com/detail/youtube-ultrawide-crop/pacjdmdcmmnbpnjfhmjfgenbpedbakjg)
+[![Install from Firefox Add-ons](https://img.shields.io/badge/Get_it_on-Firefox_Add--ons-FF7139?style=for-the-badge&logo=firefoxbrowser&logoColor=white)](https://addons.mozilla.org/en-US/firefox/addon/youtube-ultrawide-crop/)
+
+YouTube Ultrawide Crop adds one crop button directly to YouTube's player. Turn
+it on once and videos stay zoomed to fill across videos, refreshes, navigation,
+and fullscreen, until you turn it off.
+
+Built for 21:9 and other ultrawide displays.
 
 This project is not affiliated with YouTube, Google, or Alphabet.
 
