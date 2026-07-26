@@ -13,6 +13,12 @@ Built for 21:9 and other ultrawide displays.
 
 This project is not affiliated with YouTube, Google, or Alphabet.
 
+## Before and After
+
+| Crop off | Crop on |
+| --- | --- |
+| ![YouTube video with black bars before enabling ultrawide crop](store-assets/screenshots/screenshot-before-off-1280x800.png) | ![YouTube video filling the ultrawide player after enabling crop](store-assets/screenshots/screenshot-after-on-1280x800.png) |
+
 ## Features
 
 - YouTube player button for ultrawide crop / zoom-to-fill
