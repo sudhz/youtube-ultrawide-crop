@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "YouTube Ultrawide Crop",
-  "description": "Adds a YouTube player button that keeps ultrawide crop on until you turn it off.",
+  "description": "Enjoy YouTube without distracting black bars on your ultrawide monitor.",
   "permissions": [
     "storage"
   ],
