@@ -6,3 +6,4 @@ artifacts/
 .DS_Store
 *.log
 gha-creds-*.json
+.omp/mcp.json
