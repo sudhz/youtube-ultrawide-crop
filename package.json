@@ -1,6 +1,6 @@
 {
   "name": "youtube-ultrawide-crop",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "description": "Enjoy YouTube without distracting black bars on your ultrawide monitor.",
   "type": "module",
   "license": "MIT",

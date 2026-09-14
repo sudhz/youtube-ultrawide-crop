@@ -24,7 +24,7 @@ This project is not affiliated with YouTube, Google, or Alphabet.
 - YouTube player button for ultrawide crop / zoom-to-fill
 - Global persistent on/off state across videos, refreshes, and navigation
 - Works with YouTube's single-page navigation
-- Works in fullscreen
+- Works in theater mode and fullscreen
 - Read-only popup shows current crop status
 - Optional feedback form (popup link and uninstall survey)
 
@@ -107,9 +107,10 @@ player aspect ratio and video aspect ratio. The CSS clips the player and scales
 the rendered video from the center.
 
 YouTube rebuilds parts of its player during normal navigation, so the extension
-uses YouTube navigation events, a controls-scoped `MutationObserver`, video
-metadata events, resize, fullscreen, and short retry bursts to keep the button
-and crop state in sync.
+uses YouTube navigation events, a controls-scoped `MutationObserver`, a
+player-scoped `ResizeObserver`, video metadata events, window resize, fullscreen,
+and short retry bursts to keep the button and crop state in sync. Player-size
+changes automatically recalculate the crop when entering or leaving theater mode.
 
 ## Permissions
 

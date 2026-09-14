@@ -1,6 +1,6 @@
 /**
  * Sync — debounced re-injection and re-apply of button + crop.
- * Watches for YouTube DOM changes and navigation events.
+ * Watches for YouTube DOM changes, navigation events, and player resizes.
  */
 
 import { applyCrop } from '../player/crop';
@@ -10,6 +10,8 @@ import { getPlayer, getControls } from '../player/dom';
 let syncTimer = 0;
 let controlsObserver: MutationObserver | null = null;
 let observedControls: HTMLElement | null = null;
+let playerObserver: ResizeObserver | null = null;
+let observedPlayer: HTMLElement | null = null;
 let retryTimerA = 0;
 let retryTimerB = 0;
 
@@ -32,10 +34,28 @@ function observeControls(controls: HTMLElement | null): void {
     });
 }
 
+function observePlayer(player: HTMLElement | null): void {
+    if (observedPlayer === player) {
+        return;
+    }
+
+    playerObserver?.disconnect();
+    playerObserver = null;
+    observedPlayer = player;
+
+    if (!player) {
+        return;
+    }
+
+    playerObserver = new ResizeObserver(applyCropNow);
+    playerObserver.observe(player);
+}
+
 function sync(): void {
     const player = getPlayer();
     const controls = player && getControls(player);
     observeControls(controls);
+    observePlayer(player);
     if (player && controls) {
         injectButton(player, controls);
     }
