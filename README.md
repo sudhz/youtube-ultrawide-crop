@@ -13,6 +13,10 @@ Built for 21:9 and other ultrawide displays.
 
 This project is not affiliated with YouTube, Google, or Alphabet.
 
+## Demo
+
+[How the demo video was made](marketing/launch-film/making-of.md)
+
 ## Before and After
 
 | Crop off | Crop on |
