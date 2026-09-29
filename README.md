@@ -15,6 +15,8 @@ This project is not affiliated with YouTube, Google, or Alphabet.
 
 ## Demo
 
+https://github.com/user-attachments/assets/07bcd577-14ce-4095-a27a-85aa70779aa3
+
 [How the demo video was made](marketing/launch-film/making-of.md)
 
 ## Before and After
