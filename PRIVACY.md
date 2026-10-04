@@ -32,7 +32,14 @@ up on your feedback and to tell you when the issue is fixed. It is not used for
 marketing, added to a mailing list, or shared with anyone other than Tally,
 which hosts the form.
 
-Tally handles form contents and normal request information (such as IP address) under its own [privacy policy](https://tally.so/help/privacy-policy).
+Your response is stored with Tally, but we decide how long it's kept. It stays
+there until we delete it, and once we do, Tally removes it for good within 90
+days. If you'd like yours deleted, fill in the form again with the same email
+address and just ask.
+
+Like any website, Tally also sees basic connection details, such as your IP
+address, when the form loads. You can read how Tally handles form data on
+[Tally's GDPR page](https://tally.so/help/gdpr).
 
 ## Permissions
 
