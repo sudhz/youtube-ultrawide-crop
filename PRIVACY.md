@@ -1,6 +1,6 @@
 # Privacy Policy
 
-Effective date: 2026-07-12
+Effective date: 2026-10-04
 
 ## Data Stored Locally
 
@@ -22,6 +22,15 @@ When the form opens, the extension adds only:
 On Firefox, these two values are added only when the optional technical and
 interaction data permission is enabled. Otherwise, the form opens without
 either value.
+
+### What the form collects
+
+Apart from those two values, the form only receives what you choose to enter:
+your answers, and optionally a YouTube link, a description, and your email
+address. Leaving your email is optional. If you do, it is used only to follow
+up on your feedback and to tell you when the issue is fixed. It is not used for
+marketing, added to a mailing list, or shared with anyone other than Tally,
+which hosts the form.
 
 Tally handles form contents and normal request information (such as IP address) under its own [privacy policy](https://tally.so/help/privacy-policy).
 
